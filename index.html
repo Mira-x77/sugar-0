@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0a2a1d" />
+  <title>Sugar-0% — Sweetness, without the sugar.</title>
+  <meta name="description" content="Sugar-0% is a 100% natural stevia sweetener with zero calories. One scoop equals one teaspoon of sugar. Powder, sachets and drops — sweetened by nature, nurtured by science." />
+  <meta property="og:title" content="Sugar-0% — Sweetness, without the sugar." />
+  <meta property="og:description" content="100% natural stevia extract. Zero calories. Zero compromise. Explore the collection." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="/assets/jar.webp" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="preload" as="image" href="/assets/logo.png" />
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"><span></span></div>
+
+  <!-- ───────────────────────── Preloader ───────────────────────── -->
+  <div class="preloader" data-preloader aria-hidden="true">
+    <div class="preloader__panel preloader__panel--top"></div>
+    <div class="preloader__panel preloader__panel--bottom"></div>
+    <div class="preloader__inner">
+      <img class="preloader__logo" src="/assets/logo.png" alt="Sugar-0%" />
+      <div class="preloader__meta">
+        <span>Sweetened by nature</span>
+        <span data-loader-percent>0%</span>
+      </div>
+      <div class="preloader__bar"><span data-loader-bar></span></div>
+      <p class="preloader__note">Nurtured by science · Mehsana, India</p>
+    </div>
+  </div>
+
+  <div class="scroll-progress" aria-hidden="true"><span data-scroll-progress></span></div>
+
+  <!-- ───────────────────────── Header ───────────────────────── -->
+  <header class="site-header site-header--mint" data-header>
+    <a class="brand" href="#top" aria-label="Sugar-0% home">
+      <img src="/assets/logo.png" alt="Sugar-0%" width="150" height="23" />
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <a href="#top" data-nav class="is-active">Home</a>
+      <a href="#collection" data-nav>Product</a>
+      <a href="#story" data-nav>About us</a>
+      <a href="#reviews" data-nav>Reviews</a>
+      <a href="#faq" data-nav>FAQ</a>
+      <a href="#contact" data-nav>Contact us</a>
+    </nav>
+    <div class="header__actions">
+      <button class="icon-btn cart-btn" type="button" data-cart-open aria-label="Open your bag">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l1 12H5L6 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+        <span class="cart-count" data-cart-count>0</span>
+      </button>
+      <a class="header__consult" href="#contact">Consult now</a>
+      <button class="menu-btn" type="button" data-menu-open aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+        <span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobile-menu" data-menu aria-hidden="true">
+    <div class="mobile-menu__top">
+      <span class="eyebrow eyebrow--gold">Menu</span>
+      <button class="mobile-menu__close" type="button" data-menu-close aria-label="Close menu">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg>
+      </button>
+    </div>
+    <nav class="mobile-menu__nav" aria-label="Mobile">
+      <a href="#top" data-menu-link><span>01</span>Home</a>
+      <a href="#collection" data-menu-link><span>02</span>Product</a>
+      <a href="#studio" data-menu-link><span>03</span>3D Studio</a>
+      <a href="#why" data-menu-link><span>04</span>Why Sugar-0%</a>
+      <a href="#story" data-menu-link><span>05</span>About us</a>
+      <a href="#reviews" data-menu-link><span>06</span>Reviews</a>
+      <a href="#faq" data-menu-link><span>07</span>FAQ</a>
+      <a href="#contact" data-menu-link><span>08</span>Contact</a>
+    </nav>
+    <div class="mobile-menu__foot">
+      <a href="mailto:naturalsweetsolutions@gmail.com">naturalsweetsolutions@gmail.com</a>
+      <a href="tel:+919427318047">+91 94273 18047</a>
+      <p>Sweetened by Nature · Nurtured by Science</p>
+    </div>
+    <img class="mobile-menu__mark" src="/assets/logo-cream.png" alt="" aria-hidden="true" />
+  </div>
+
+  <main id="top">
+    <!-- ───────────────────────── Hero ───────────────────────── -->
+    <div class="hero-shell">
+      <section class="hero hero--mint" aria-labelledby="hero-title">
+        <div class="hero__bg" aria-hidden="true">
+          <span class="orb orb--mint"></span>
+          <span class="orb orb--gold"></span>
+          <span class="orb orb--cream"></span>
+          <span class="hero__ring hero__ring--one"></span>
+          <span class="hero__ring hero__ring--two"></span>
+          <span class="hero__ghost">0%</span>
+        </div>
+
+        <div class="hero__inner">
+          <div class="hero__copy">
+            <p class="eyebrow eyebrow--leaf"><span class="eyebrow__leaf"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19C5 10 10 4 20 4c0 10-6 15-15 15Z"/><path d="M5 19c2-5 6-8 10-10"/></svg></span>100% natural · zero calories</p>
+            <h1 class="hero__title" id="hero-title">
+              <span class="hero__title-line"><span>Pure</span></span>
+              <span class="hero__title-line"><span>Stevia</span></span>
+              <span class="hero__title-line hero__title-line--leaf"><span>Extract</span><svg class="hero__title-leaf" viewBox="0 0 60 60" aria-hidden="true"><path d="M9 51C9 26 26 9 52 8c1 26-16 43-43 43Z"/><path d="M9 51c8-16 18-26 31-33"/></svg></span>
+            </h1>
+            <p class="hero__lede">100% natural tabletop sweetener with zero calories. One scoop equals one teaspoon of sugar — all of the ritual, none of the sugar.</p>
+            <div class="hero__actions">
+              <a class="btn btn--teal btn--lg" href="#collection"><span>Choose a product</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 3l5 5-5 5"/></svg></a>
+              <a class="hero__link" href="#studio">Meet it in 3D <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 3l5 5-5 5"/></svg></a>
+            </div>
+            <div class="hero__proof">
+              <span><strong>0</strong> calories</span>
+              <span><strong>0</strong> glycemic index</span>
+              <span><strong>100%</strong> plant-based</span>
+            </div>
+          </div>
+
+          <div class="hero__visual" data-hero-visual>
+            <span class="hero__disc" aria-hidden="true"></span>
+            <figure class="hero-shot hero-shot--jar">
+              <img src="/assets/jar.webp" alt="Sugar-0% stevia powder jar with a copper lid" />
+            </figure>
+            <figure class="hero-shot hero-shot--drops">
+              <img src="/assets/drops.webp" alt="Sugar-0% stevia drops bottle and box" />
+            </figure>
+            <figure class="hero-shot hero-shot--sachets">
+              <img src="/assets/sachets.webp" alt="Sugar-0% stevia sachets box with a cup of chai" />
+            </figure>
+            <img class="hero-sachet" src="/assets/sachet.webp" alt="" aria-hidden="true" />
+            <div class="hero-float hero-float--zero">
+              <span class="hero-float__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2s6 6.4 6 11a6 6 0 0 1-12 0c0-4.6 6-11 6-11Z"/></svg></span>
+              <span><strong>Zero calories</strong><small>per serving</small></span>
+            </div>
+            <div class="hero-float hero-float--natural">
+              <span class="hero-float__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19C5 10 10 4 20 4c0 10-6 15-15 15Z"/><path d="M5 19c2-5 6-8 10-10"/></svg></span>
+              <span><strong>100% Natural &amp; Vegan</strong><small>plant-based sweetness</small></span>
+            </div>
+          </div>
+        </div>
+
+        <p class="hero__signature">Sweetened by Nature<br />Nurtured by Science</p>
+        <a class="hero__scroll" href="#intro" aria-label="Scroll to explore"><span>Scroll to explore</span><i></i></a>
+      </section>
+    </div>
+
+    <!-- ───────────────────────── Ticker ───────────────────────── -->
+    <div class="ticker" aria-label="Sugar-0% highlights">
+      <div class="ticker__live">
+        <span class="live-dot"></span>
+        <span>Live from Mehsana</span>
+        <time data-clock>--:--:--</time>
+      </div>
+      <div class="ticker__viewport">
+        <div class="ticker__track" aria-hidden="true">
+          <span>100% natural</span><i>✳</i><span>Zero calories</span><i>✳</i><span>Gluten free</span><i>✳</i><span>Non-GMO</span><i>✳</i><span>Vegan</span><i>✳</i><span>Keto friendly</span><i>✳</i><span>Zero glycemic index</span><i>✳</i><span>No preservatives</span><i>✳</i>
+          <span>100% natural</span><i>✳</i><span>Zero calories</span><i>✳</i><span>Gluten free</span><i>✳</i><span>Non-GMO</span><i>✳</i><span>Vegan</span><i>✳</i><span>Keto friendly</span><i>✳</i><span>Zero glycemic index</span><i>✳</i><span>No preservatives</span><i>✳</i>
+        </div>
+      </div>
+    </div>
+
+    <!-- ───────────────────────── Intro / The shift ───────────────────────── -->
+    <section class="section section--intro" id="intro" aria-labelledby="intro-title">
+      <div class="wrap intro__grid">
+        <div class="intro__copy">
+          <p class="eyebrow reveal">01 — The shift</p>
+          <h2 class="display" id="intro-title" data-split>Sugar had a good run. <em>Nature had a better idea.</em></h2>
+          <p class="lede reveal">Sugar-0% begins where the sugar bowl ends. A premium, plant-based sweetener made from high-purity steviol glycosides and dietary fibre — clean, smooth and remarkably close to the real thing.</p>
+          <div class="intro__facts">
+            <div class="reveal">
+              <span class="intro__fact-num">0</span>
+              <span class="intro__fact-label">calories. No sugar spike. No compromise.</span>
+            </div>
+            <div class="reveal">
+              <span class="intro__fact-num">1:1</span>
+              <span class="intro__fact-label">One scoop replaces one teaspoon of sugar.</span>
+            </div>
+          </div>
+          <a class="text-link reveal" href="#why">Read the fine print <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 3l5 5-5 5"/></svg></a>
+        </div>
+        <div class="intro__media">
+          <div class="arch reveal-img">
+            <img src="/assets/cafe.jpg" alt="A table set with chai, coffee, yogurt and a bowl of Sugar-0% sweetener" loading="lazy" />
+            <span class="arch__tag">The everyday ritual</span>
+          </div>
+          <div class="seal" aria-hidden="true">
+            <svg viewBox="0 0 200 200">
+              <defs><path id="sealPath" d="M100,100 m-74,0 a74,74 0 1,1 148,0 a74,74 0 1,1 -148,0"/></defs>
+              <text><textPath href="#sealPath">SWEETENED BY NATURE · NURTURED BY SCIENCE · </textPath></text>
+            </svg>
+            <span class="seal__center">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19C5 10 10 4 20 4c0 10-6 15-15 15Z"/><path d="M5 19c2-5 6-8 10-10"/></svg>
+            </span>
+          </div>
+          <div class="glass-note glass-note--intro">
+            <strong>0 kcal</strong>
+            <span>per serving</span>
+          </div>
+          <span class="intro__scribble" aria-hidden="true">sweet, isn't it?</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────────────────── Collection ───────────────────────── -->
+    <section class="section section--forest section--collection" id="collection" aria-labelledby="collection-title">
+      <div class="wrap">
+        <div class="section-head section-head--light">
+          <div>
+            <p class="eyebrow eyebrow--gold reveal">02 — The collection</p>
+            <h2 class="display" id="collection-title" data-split>Three ways to <em>keep it sweet.</em></h2>
+          </div>
+          <div class="section-head__side">
+            <p class="section-head__note reveal">For the jar on the counter, the sachet in your bag and the drops on the table. Same clean sweetness, three rituals.</p>
+            <a class="text-link text-link--gold reveal" href="#lab">Find your daily scoop <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 3l5 5-5 5"/></svg></a>
+          </div>
+        </div>
+
+        <div class="products" data-products></div>
+
+        <div class="collection__strip reveal">
+          <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19C5 10 10 4 20 4c0 10-6 15-15 15Z"/></svg>Plant-based</span>
+          <span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M8 12h8"/></svg>Zero sugar</span>
+          <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M5 8l7-5 7 5"/></svg>100 g = 100 servings</span>
+          <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16M12 4v16"/></svg>Free from preservatives</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────────────────── 3D product studio ───────────────────────── -->
+    <section class="section section--studio" id="studio" aria-labelledby="studio-title">
+      <div class="wrap">
+        <div class="section-head section-head--studio">
+          <div>
+            <p class="eyebrow eyebrow--live reveal"><span class="live-dot"></span>Product studio · live 3D</p>
+            <h2 class="display" id="studio-title" data-split>Turn it. <em>See every side.</em></h2>
+          </div>
+          <div class="section-head__side">
+            <p class="section-head__note reveal">A real-time 3D look at the range. Drag to spin, switch products, and inspect the details up close — right here in the browser.</p>
+            <a class="text-link reveal" href="#collection">Shop the collection <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 3l5 5-5 5"/></svg></a>
+          </div>
+        </div>
+
+        <div class="studio__grid">
+          <div class="studio__stage reveal" data-stage>
+            <div class="studio__canvas" data-canvas-wrap>
+              <canvas id="scene" aria-label="Interactive 3D Sugar-0% product. Drag to rotate."></canvas>
+            </div>
+            <div class="studio__floor" aria-hidden="true"></div>
+            <div class="stage__caption">
+              <span class="stage__caption-index" data-product-index>01</span>
+              <span class="stage__caption-name" data-product-name>The Powder</span>
+              <span class="stage__caption-size" data-product-size>100 g</span>
+            </div>
+            <p class="stage__hint"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v6H5l7 8 7-8h-3V5H8Z"/></svg>Drag to spin · 360°</p>
+          </div>
+
+          <div class="studio__info reveal">
+            <div class="studio__switch" role="tablist" aria-label="Choose a product">
+              <button class="product-switch__btn is-active" type="button" data-product="jar" role="tab" aria-selected="true">
+                <span>01</span> The Powder
+              </button>
+              <button class="product-switch__btn" type="button" data-product="sachet" role="tab" aria-selected="false">
+                <span>02</span> The Sachets
+              </button>
+              <button class="product-switch__btn" type="button" data-product="drops" role="tab" aria-selected="false">
+                <span>03</span> The Drops
+              </button>
+            </div>
+            <p class="studio__kicker" data-studio-kicker>01 — The everyday essential</p>
+            <h3 class="studio__name" data-studio-name>Stevia Powder</h3>
+            <p class="studio__price" data-studio-price>₹499 <span>· 100 g</span></p>
+            <p class="studio__desc" data-studio-desc>The jar that lives on the counter. A 100% natural, plant-based sweetener with zero calories and a clean, sugar-like finish.</p>
+            <dl class="studio__meta">
+              <div><dt>Best for</dt><dd data-studio-best>Chai, coffee, smoothies, baking</dd></div>
+              <div><dt>Inside</dt><dd data-studio-ingredients>Allulose, high-purity steviol glycosides, dietary fibre.</dd></div>
+            </dl>
+            <div class="studio__actions">
+              <button class="btn btn--teal btn--lg" type="button" data-studio-add data-add="jar">
+                <span>Add to bag</span>
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2v12M2 8h12"/></svg>
+              </button>
+              <button class="studio__details" type="button" data-studio-view data-view="jar">Full details <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 3l5 5-5 5"/></svg></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────────────────── Sweetness Lab ───────────────────────── -->
+    <section class="section section--lab" id="lab" aria-labelledby="lab-title">
+      <div class="wrap lab__grid">
+        <div class="lab__copy">
+          <p class="eyebrow eyebrow--live reveal"><span class="live-dot"></span>Live · Sweetness Lab</p>
+          <h2 class="display" id="lab-title" data-split>Swap the sugar. <em>Keep the ritual.</em></h2>
+          <p class="lede reveal">Drag the slider to see exactly what changes — and what doesn’t. The sweetness stays. The calories don’t.</p>
+          <div class="lab__legend reveal">
+            <div><span class="legend-dot legend-dot--gold"></span>1 scoop = 1 teaspoon of sugar</div>
+            <div><span class="legend-dot"></span>100 scoops per 100 g jar</div>
+            <div><span class="legend-dot"></span>1 teaspoon of sugar ≈ 16 kcal</div>
+          </div>
+          <div class="lab__quote reveal">
+            <span class="lab__quote-mark">“</span>
+            <p>The best sugar substitute is the one you forget you switched to.</p>
+            <span class="lab__quote-by">— The Sugar-0% kitchen note</span>
+          </div>
+        </div>
+
+        <div class="lab__panel reveal" data-lab>
+          <div class="lab__panel-head">
+            <div>
+              <span class="lab__panel-eyebrow">Your daily cup</span>
+              <h3 class="lab__panel-title">Sweetness, measured.</h3>
+            </div>
+            <span class="lab__live"><span class="live-dot"></span>Live</span>
+          </div>
+
+          <div class="lab__control">
+            <div class="lab__control-head">
+              <label for="sweetness-range">Sugar you’d normally use</label>
+              <output for="sweetness-range" data-tsp>4 tsp</output>
+            </div>
+            <input id="sweetness-range" type="range" min="1" max="20" value="4" step="1" aria-describedby="lab-note" />
+            <div class="lab__presets" role="group" aria-label="Quick amounts">
+              <button type="button" data-preset="1">Chai <span>1 tsp</span></button>
+              <button type="button" data-preset="2">Coffee <span>2 tsp</span></button>
+              <button type="button" data-preset="4" class="is-active">Smoothie <span>4 tsp</span></button>
+              <button type="button" data-preset="8">Dessert <span>8 tsp</span></button>
+            </div>
+          </div>
+
+          <div class="lab__results">
+            <div class="lab__gauge">
+              <svg class="lab__gauge-svg" viewBox="0 0 200 200" aria-hidden="true">
+                <circle class="gauge-track" cx="100" cy="100" r="86"/>
+                <circle class="gauge-progress" cx="100" cy="100" r="86" data-gauge/>
+                <g class="gauge-ticks" data-ticks></g>
+              </svg>
+              <div class="lab__gauge-center">
+                <strong data-scoops>4</strong>
+                <span>scoops a day</span>
+              </div>
+            </div>
+            <div class="lab__numbers">
+              <div class="lab__number">
+                <strong data-calories>64</strong>
+                <span>calories avoided</span>
+              </div>
+              <div class="lab__number">
+                <strong data-sugar>16.8<span>g</span></strong>
+                <span>sugar avoided</span>
+              </div>
+              <div class="lab__number">
+                <strong data-jar-days>25</strong>
+                <span>days of sweetness<br />per jar</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="lab__meter">
+            <div class="lab__meter-head"><span>Jar used today</span><span data-jar-use>4%</span></div>
+            <div class="lab__meter-bar"><span data-meter></span></div>
+          </div>
+          <p class="lab__note" id="lab-note">A 100 g jar holds 100 scoops. One scoop replaces one teaspoon of sugar — zero calories, zero glycemic index.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────────────────── Why / 27 features ───────────────────────── -->
+    <section class="section section--why section--features" id="why" aria-labelledby="why-title">
+      <div class="wrap">
+        <div class="features__head">
+          <div class="features__number reveal" aria-hidden="true">
+            <span>27</span>
+            <small>key<br />features</small>
+          </div>
+          <div class="features__intro">
+            <p class="eyebrow reveal">03 — The fine print, in plain sight</p>
+            <h2 class="display" id="why-title" data-split>27 key features of our <em>natural sweetener.</em></h2>
+            <p class="features__lede reveal">Everything we put in — and everything we leave out — in one honest list.</p>
+          </div>
+          <span class="features__leaf" aria-hidden="true">
+            <svg viewBox="0 0 120 120"><path d="M18 102C18 54 52 18 104 16c2 52-32 86-86 86Z"/><path d="M18 102c17-34 39-56 67-71"/></svg>
+          </span>
+        </div>
+
+        <div class="feature-panels reveal" data-features></div>
+
+        <div class="why__foot reveal">
+          <span>Pure</span><i>·</i><span>Natural</span><i>·</i><span>Healthy</span>
+          <p>27 powerful features in every spoonful.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────────────────── Nutrition ───────────────────────── -->
+    <section class="section section--nutrition" id="nutrition" aria-labelledby="nutrition-title">
+      <div class="wrap nutrition__grid">
+        <div class="nutrition__copy">
+          <p class="eyebrow reveal">04 — Ingredients &amp; nutrition</p>
+          <h2 class="display" id="nutrition-title" data-split>Nothing to hide. <em>Everything to taste.</em></h2>
+          <p class="lede reveal">A short ingredient list you can actually read. No artificial sweeteners, no preservatives, no fillers that don’t belong.</p>
+
+          <div class="ingredients reveal">
+            <span class="ingredients__label">Inside the jar</span>
+            <div class="ingredient"><span>01</span><strong>Allulose</strong><p>The naturally occurring rare sugar that gives Sugar-0% its clean, sugar-like body.</p></div>
+            <div class="ingredient"><span>02</span><strong>Steviol glycosides</strong><p>High-purity stevia extract — the leaf-powered sweetness at the heart of every scoop.</p></div>
+            <div class="ingredient"><span>03</span><strong>Dietary fibre</strong><p>A gentle prebiotic fibre that rounds out the blend and supports everyday digestion.</p></div>
+          </div>
+
+          <div class="certifications reveal">
+            <span class="cert">Gluten<br /><strong>free</strong></span>
+            <span class="cert">Non<br /><strong>GMO</strong></span>
+            <span class="cert">100%<br /><strong>Vegan</strong></span>
+            <span class="cert">Keto<br /><strong>friendly</strong></span>
+            <span class="cert">FSSAI<br /><strong>licensed</strong></span>
+          </div>
+        </div>
+
+        <div class="nutri-card reveal">
+          <div class="nutri-card__top">
+            <span class="nutri-card__eyebrow">Per 1 g serving</span>
+            <div class="nutri-card__zero">
+              <svg viewBox="0 0 120 120" aria-hidden="true">
+                <circle cx="60" cy="60" r="54" class="nutri-ring"/>
+                <circle cx="60" cy="60" r="54" class="nutri-ring nutri-ring--dash"/>
+              </svg>
+              <strong>0</strong>
+              <span>kcal</span>
+            </div>
+          </div>
+          <table class="nutri-table">
+            <caption class="sr-only">Nutritional facts per 1 gram serving</caption>
+            <tbody>
+              <tr><th scope="row">Energy</th><td>0.2 kcal</td><td class="nutri-bar"><span style="--v: 2%"></span></td></tr>
+              <tr><th scope="row">Protein</th><td>0.00 g</td><td class="nutri-bar"><span style="--v: 0%"></span></td></tr>
+              <tr><th scope="row">Carbohydrate</th><td>0.98 g</td><td class="nutri-bar"><span style="--v: 8%"></span></td></tr>
+              <tr><th scope="row">Fat</th><td>0.00 g</td><td class="nutri-bar"><span style="--v: 0%"></span></td></tr>
+              <tr><th scope="row">Added sugars</th><td>0 g</td><td class="nutri-bar"><span style="--v: 0%"></span></td></tr>
+              <tr><th scope="row">Dietary fibre</th><td>&lt; 1 g</td><td class="nutri-bar"><span style="--v: 4%"></span></td></tr>
+            </tbody>
+          </table>
+          <div class="nutri-card__foot">
+            <span>Net quantity 100 g</span>
+            <span>1 scoop = 1 tsp sugar</span>
+          </div>
+          <p class="nutri-card__note">Store in a cool, dry, hygienic place. Do not refrigerate. Best before 24 months from the date of manufacture. Not a substitute for medical advice.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────────────────── Story / Ritual ───────────────────────── -->
+    <section class="section section--story" id="story" aria-labelledby="story-title">
+      <div class="wrap story__grid">
+        <div class="story__copy">
+          <p class="eyebrow eyebrow--gold reveal">05 — The ritual</p>
+          <h2 class="display" id="story-title" data-split>A small ritual. <em>A lighter everyday.</em></h2>
+          <p class="lede lede--light reveal">Sweetness is the one part of the day that should feel effortless. Sugar-0% keeps the teaspoon, the stir, the pause — and quietly takes the sugar out of the equation.</p>
+          <div class="story__quote reveal">
+            <span>“</span>
+            <p>Sweetened by Nature.<br />Nurtured by Science.</p>
+          </div>
+          <a class="btn btn--cream reveal" href="#collection"><span>Find your ritual</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 3l5 5-5 5"/></svg></a>
+        </div>
+        <div class="story__media">
+          <div class="arch arch--light reveal-img">
+            <img src="/assets/sachets.webp" alt="A box of Sugar-0% stevia sachets on a marble table with coffee and spices" loading="lazy" />
+          </div>
+          <div class="story__badge">
+            <span>Since</span>
+            <strong>2024</strong>
+            <span>Mehsana, India</span>
+          </div>
+          <span class="story__mark" aria-hidden="true">0%</span>
+        </div>
+      </div>
+
+      <div class="wrap steps">
+        <article class="step reveal">
+          <span class="step__num">01</span>
+          <div class="step__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="10" cy="8" rx="5" ry="6"/><path d="M10 14v7"/></svg></div>
+          <h3>Scoop</h3>
+          <p>One scoop replaces one teaspoon of sugar. No measuring charts, no mental math.</p>
+        </article>
+        <article class="step reveal">
+          <span class="step__num">02</span>
+          <div class="step__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16v3a8 8 0 0 1-16 0V8Z"/><path d="M8 3v2M12 2v3M16 3v2"/></svg></div>
+          <h3>Stir</h3>
+          <p>Dissolves clear in chai, coffee, cold drinks and batters. No grit, no lingering aftertaste.</p>
+        </article>
+        <article class="step reveal">
+          <span class="step__num">03</span>
+          <div class="step__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c2.5 2.6 4 5.2 4 7.5A4 4 0 0 1 8 10c0-2.3 1.5-4.9 4-7Z"/><path d="M6 17c2 1.3 4 2 6 2s4-.7 6-2"/></svg></div>
+          <h3>Savor</h3>
+          <p>All the sweetness you know, without the sugar you don’t need. That’s the whole idea.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ───────────────────────── Tasting notes ───────────────────────── -->
+    <section class="section section--reviews" id="reviews" aria-labelledby="reviews-title">
+      <div class="wrap">
+        <div class="reviews__head">
+          <div>
+            <p class="eyebrow reveal">06 — Tasting notes</p>
+            <h2 class="display" id="reviews-title" data-split>Heard around <em>the table.</em></h2>
+          </div>
+          <div class="reviews__score reveal">
+            <strong>4.9</strong>
+            <div>
+              <span class="stars" aria-label="4.9 out of 5 stars">★★★★★</span>
+              <small>from early tasting sessions</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="reviews__slider" data-reviews aria-live="polite"></div>
+        <div class="reviews__controls">
+          <button class="round-btn" type="button" data-review-prev aria-label="Previous tasting note"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M14 8H3M7 3L2 8l5 5"/></svg></button>
+          <div class="reviews__dots" data-review-dots></div>
+          <button class="round-btn" type="button" data-review-next aria-label="Next tasting note"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 3l5 5-5 5"/></svg></button>
+        </div>
+        <p class="reviews__note">Early feedback from our tasting sessions. Your kitchen may disagree — in the best way.</p>
+      </div>
+    </section>
+
+    <!-- ───────────────────────── FAQ ───────────────────────── -->
+    <section class="section section--faq" id="faq" aria-labelledby="faq-title">
+      <div class="wrap faq__grid">
+        <div class="faq__intro">
+          <p class="eyebrow reveal">07 — Good questions</p>
+          <h2 class="display" id="faq-title" data-split>Honest answers, <em>no sugar-coating.</em></h2>
+          <p class="lede reveal">Still curious? Write to us. A real person from our small team will write back.</p>
+          <div class="faq__contact reveal">
+            <a href="mailto:naturalsweetsolutions@gmail.com">
+              <span class="faq__contact-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v12H3V6Z"/><path d="m3 7 9 6 9-6"/></svg></span>
+              <span><small>Email us</small>naturalsweetsolutions@gmail.com</span>
+            </a>
+            <a href="tel:+919427318047">
+              <span class="faq__contact-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A15 15 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg></span>
+              <span><small>Call us</small>+91 94273 18047</span>
+            </a>
+          </div>
+        </div>
+        <div class="accordion" data-faq></div>
+      </div>
+    </section>
+
+    <!-- ───────────────────────── CTA / Contact ───────────────────────── -->
+    <section class="section section--cta" id="contact" aria-labelledby="cta-title">
+      <div class="cta__orb" aria-hidden="true"></div>
+      <span class="cta__watermark" aria-hidden="true">0%</span>
+      <div class="wrap cta__grid">
+        <div class="cta__copy">
+          <p class="eyebrow eyebrow--gold reveal">08 — Make the switch</p>
+          <h2 class="display" id="cta-title" data-split>Keep the sweet. <em>Lose the sugar.</em></h2>
+          <p class="lede lede--light reveal">Start with a jar, a box or a bottle. Or tell us how you use sweetness and we’ll point you to the right one.</p>
+          <div class="cta__actions reveal">
+            <a class="btn btn--cream btn--lg" href="#collection"><span>Shop the collection</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 3l5 5-5 5"/></svg></a>
+            <a class="cta__email" href="mailto:naturalsweetsolutions@gmail.com">naturalsweetsolutions@gmail.com</a>
+          </div>
+          <div class="cta__meta reveal">
+            <span>Natural &amp; Sweet Solutions Pvt. Ltd.</span>
+            <span>F/3, Pooja Apartment, T.B. Hospital Road, Mehsana, Gujarat 384002</span>
+          </div>
+        </div>
+
+        <form class="consult reveal" data-consult novalidate>
+          <div class="consult__head">
+            <h3>Talk to us</h3>
+            <p>Personal, café or bulk — tell us a little and we’ll take it from there.</p>
+          </div>
+          <div class="field">
+            <label for="consult-name">Your name</label>
+            <input id="consult-name" name="name" type="text" autocomplete="name" placeholder="Aarav Patel" required />
+          </div>
+          <div class="field">
+            <label for="consult-email">Email</label>
+            <input id="consult-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required />
+          </div>
+          <div class="field">
+            <label for="consult-topic">I’m curious about</label>
+            <select id="consult-topic" name="topic">
+              <option>Everyday use at home</option>
+              <option>Café &amp; restaurant supply</option>
+              <option>Bulk &amp; distribution</option>
+              <option>Press &amp; partnerships</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="consult-message">Message <span>(optional)</span></label>
+            <textarea id="consult-message" name="message" rows="3" placeholder="A little about how you use sweetness…"></textarea>
+          </div>
+          <button class="btn btn--gold btn--full" type="submit"><span>Send enquiry</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 3l5 5-5 5"/></svg></button>
+          <p class="consult__note">This opens your email app with the details filled in. No mailing list, no spam.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- ───────────────────────── Footer ───────────────────────── -->
+  <footer class="site-footer">
+    <div class="wrap footer__top">
+      <div class="footer__brand">
+        <a href="#top" aria-label="Sugar-0% home"><img src="/assets/logo-cream.png" alt="Sugar-0%" width="190" /></a>
+        <p>Sweetened by Nature.<br />Nurtured by Science.</p>
+        <div class="footer__badges">
+          <span>100% natural</span><span>Zero calories</span><span>Vegan</span>
+        </div>
+      </div>
+      <div class="footer__col">
+        <span class="footer__label">Explore</span>
+        <a href="#collection">Collection</a>
+        <a href="#lab">Sweetness Lab</a>
+        <a href="#why">Why Sugar-0%</a>
+        <a href="#nutrition">Ingredients</a>
+        <a href="#story">Our Story</a>
+      </div>
+      <div class="footer__col">
+        <span class="footer__label">Products</span>
+        <a href="#collection">Stevia Powder · 100 g</a>
+        <a href="#collection">Stevia Sachets · 30</a>
+        <a href="#collection">Stevia Drops · 30 ml</a>
+        <a href="#contact">Bulk &amp; wholesale</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <div class="footer__col footer__col--contact">
+        <span class="footer__label">Say hello</span>
+        <a href="mailto:naturalsweetsolutions@gmail.com">naturalsweetsolutions@gmail.com</a>
+        <a href="tel:+919427318047">+91 94273 18047</a>
+        <p>F/3, Pooja Apartment,<br />T.B. Hospital Road,<br />Mehsana, Gujarat 384002</p>
+      </div>
+    </div>
+    <div class="wrap footer__bottom">
+      <p>© <span data-year>2026</span> Sugar-0% · Natural &amp; Sweet Solutions Pvt. Ltd.</p>
+      <p>FSSAI licensed · Made in India</p>
+      <a href="#top" class="footer__top-link">Back to top <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 14V3M3 7l5-5 5 5"/></svg></a>
+    </div>
+  </footer>
+
+  <!-- Mobile dock -->
+  <div class="mobile-dock">
+    <a class="btn btn--dark" href="#collection"><span>Shop the collection</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 3l5 5-5 5"/></svg></a>
+    <button class="icon-btn cart-btn" type="button" data-cart-open aria-label="Open your bag">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l1 12H5L6 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+      <span class="cart-count" data-cart-count>0</span>
+    </button>
+  </div>
+
+  <!-- ───────────────────────── Cart drawer ───────────────────────── -->
+  <div class="scrim" data-scrim></div>
+  <aside class="cart" data-cart aria-hidden="true" aria-label="Your bag">
+    <div class="cart__head">
+      <div>
+        <span class="eyebrow">Your bag</span>
+        <h2 class="cart__title">A little sweetness,<br /><em>on its way.</em></h2>
+      </div>
+      <button class="icon-btn" type="button" data-cart-close aria-label="Close bag"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+    </div>
+    <div class="cart__body" data-cart-items></div>
+    <div class="cart__empty" data-cart-empty>
+      <span class="cart__empty-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19C5 10 10 4 20 4c0 10-6 15-15 15Z"/><path d="M5 19c2-5 6-8 10-10"/></svg></span>
+      <p>Your bag is empty.<br />Let’s fix that.</p>
+      <button class="btn btn--dark" type="button" data-cart-shop><span>Explore the collection</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 3l5 5-5 5"/></svg></button>
+    </div>
+    <div class="cart__foot" data-cart-foot>
+      <div class="cart__line"><span>Subtotal</span><strong data-cart-subtotal>₹0</strong></div>
+      <p class="cart__note">Taxes included. Delivery confirmed by our team after your order enquiry.</p>
+      <button class="btn btn--gold btn--full" type="button" data-checkout><span>Send order enquiry</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 3l5 5-5 5"/></svg></button>
+      <p class="cart__demo">A design demo — checkout opens a pre-filled email order. Connect Razorpay or Shopify to take payment online.</p>
+    </div>
+  </aside>
+
+  <!-- Product quick view -->
+  <div class="product-modal" data-product-modal aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="product-modal-title">
+    <div class="product-modal__scrim" data-product-modal-close></div>
+    <div class="product-modal__panel">
+      <button class="icon-btn product-modal__close" type="button" data-product-modal-close aria-label="Close product details"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+      <div class="product-modal__media"><img data-modal-image src="/assets/jar.webp" alt="" /></div>
+      <div class="product-modal__body">
+        <p class="eyebrow" data-modal-kicker>The everyday essential</p>
+        <h2 class="product-modal__title" id="product-modal-title" data-modal-title>Stevia Powder</h2>
+        <p class="product-modal__price" data-modal-price>₹499 <span>· 100 g</span></p>
+        <p class="product-modal__desc" data-modal-desc></p>
+        <div class="product-modal__block">
+          <h3>How to use</h3>
+          <p data-modal-usage></p>
+        </div>
+        <div class="product-modal__block">
+          <h3>Ingredients</h3>
+          <p data-modal-ingredients></p>
+        </div>
+        <div class="product-modal__actions">
+          <button class="btn btn--dark btn--full" type="button" data-modal-add><span>Add to bag</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2v12M2 8h12"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" data-toast role="status" aria-live="polite">
+    <span class="toast__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12l5 5L20 6"/></svg></span>
+    <span data-toast-text>Added to your bag.</span>
+  </div>
+
+  <noscript>
+    <div style="padding:2rem;text-align:center;background:#0a2a1d;color:#f7f3e7">This experience uses JavaScript for the 3D product stage and interactions. Please enable it to explore Sugar-0%.</div>
+  </noscript>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+node_modules/
+dist/
+extracted/
+
+# Design source files (not needed to run the site)
+*.pdf
+WhatsApp Image*.jpeg
+cvm.jpeg
+dfh.jpeg
+
+# Local tooling output
+*.log
+.DS_Store
+Thumbs.db
