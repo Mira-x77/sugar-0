@@ -13,7 +13,6 @@ import './style.css';
 import Lenis from 'lenis';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { initScene } from './scene.js';
 import { products, featureGroups, reviews, faqs } from './data.js';
 import { icon } from './icons.js';
 
@@ -30,6 +29,7 @@ document.documentElement.classList.add('js');
    Smooth scroll
    ============================================================ */
 let sceneApi = null;
+const baseTitle = document.title;
 const lenis = new Lenis({
   duration: 1.15,
   easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -181,12 +181,13 @@ const productsEl = $('[data-products]');
 function productCard(p) {
   return `
     <article class="product-card" data-id="${p.id}">
+      <a class="product-card__link" href="#/product/${p.id}" aria-label="View ${p.name} details"></a>
       <div class="product-card__media">
         <img src="${p.image}" alt="${p.alt}" loading="lazy" />
         <span class="product-card__badge">${p.badge}</span>
-        <button class="product-card__view" type="button" data-view="${p.id}" aria-label="View details for ${p.name}">
+        <a class="product-card__view" href="#/product/${p.id}" aria-label="View details for ${p.name}" data-view="${p.id}">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M9 5h10v10"/></svg>
-        </button>
+        </a>
       </div>
       <div class="product-card__body">
         <span class="product-card__kicker">${p.index} — ${p.kicker}</span>
@@ -225,6 +226,9 @@ const cartEmpty = $('[data-cart-empty]');
 const cartFoot = $('[data-cart-foot]');
 const cartSubtotal = $('[data-cart-subtotal]');
 const cartCountEls = $$('[data-cart-count]');
+const pinInput = $('[data-pin-input]');
+const pinStatus = $('[data-pin-status]');
+let deliveryPin = '';
 let lastFocus = null;
 
 function saveCart() {
@@ -345,6 +349,7 @@ $('[data-checkout]')?.addEventListener('click', () => {
     ...lines,
     '',
     `Subtotal: ${money(cartSubtotalValue())}`,
+    deliveryPin ? `Delivery PIN: ${deliveryPin}` : 'Delivery PIN: (not checked yet)',
     '',
     'Name:',
     'Delivery address:',
@@ -355,6 +360,42 @@ $('[data-checkout]')?.addEventListener('click', () => {
   window.location.href = `mailto:naturalsweetsolutions@gmail.com?subject=${encodeURIComponent('Sugar-0% order enquiry')}&body=${encodeURIComponent(body)}`;
   showToast('Opening your email app with the order…');
 });
+
+/* Delivery PIN checker — front-end estimate only; the team confirms before dispatch. */
+const serviceablePrefixes = new Set(['11', '12', '13', '14', '16', '20', '21', '22', '24', '26', '27', '28', '30', '31', '32', '33', '34', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '48', '49', '50', '52', '56', '57', '58', '59', '60', '61', '62', '63', '64', '67', '68', '69', '70', '71', '73', '74', '75', '76', '78', '79', '80', '81', '82', '83', '84', '85']);
+function checkDeliveryPin() {
+  if (!pinInput || !pinStatus) return;
+  const pin = pinInput.value.replace(/\D/g, '').slice(0, 6);
+  pinInput.value = pin;
+  pinStatus.classList.remove('is-ok', 'is-bad');
+  if (pin.length !== 6) {
+    deliveryPin = '';
+    pinStatus.classList.add('is-bad');
+    pinStatus.textContent = 'Please enter a valid 6-digit PIN code.';
+    return;
+  }
+  deliveryPin = pin;
+  if (serviceablePrefixes.has(pin.slice(0, 2))) {
+    pinStatus.classList.add('is-ok');
+    pinStatus.textContent = `Deliverable to ${pin} · estimated 2–4 working days. Final availability is confirmed by our team.`;
+  } else {
+    pinStatus.classList.add('is-ok');
+    pinStatus.textContent = `We’ve noted ${pin}. We’re expanding quickly — our team will confirm the best delivery option by email.`;
+  }
+  showToast('Delivery PIN noted for your order.');
+}
+pinInput?.addEventListener('input', () => {
+  pinInput.value = pinInput.value.replace(/\D/g, '').slice(0, 6);
+  pinStatus?.classList.remove('is-ok', 'is-bad');
+  deliveryPin = '';
+});
+pinInput?.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    checkDeliveryPin();
+  }
+});
+$('[data-pin-check]')?.addEventListener('click', checkDeliveryPin);
 
 renderCart();
 
@@ -372,42 +413,200 @@ function showToast(text) {
 }
 
 /* ============================================================
-   Product modal
+   Dedicated product view (hash route: #/product/<id>)
    ============================================================ */
-const modal = $('[data-product-modal]');
-let modalProduct = null;
-let modalFocus = null;
-function openProduct(id) {
-  const p = products.find((x) => x.id === id);
-  if (!p) return;
-  modalProduct = p;
-  modalFocus = document.activeElement;
-  $('[data-modal-image]').src = p.image;
-  $('[data-modal-image]').alt = p.alt;
-  $('[data-modal-kicker]').textContent = `${p.index} — ${p.kicker}`;
-  $('[data-modal-title]').textContent = p.name;
-  $('[data-modal-price]').innerHTML = `${money(p.price)} <span>· ${p.size}</span>`;
-  $('[data-modal-desc]').textContent = p.desc;
-  $('[data-modal-usage]').textContent = p.usage;
-  $('[data-modal-ingredients]').textContent = p.ingredients;
-  modal.classList.add('is-open');
-  modal.setAttribute('aria-hidden', 'false');
+const pvEl = $('[data-product-view]');
+let pvProduct = null;
+let pvMode = 'photo';
+let pvSceneApi = null;
+let pvLoadPromise = null;
+
+function findProduct(id) { return products.find((x) => x.id === id); }
+
+function setPvMode(mode) {
+  if (!pvEl) return;
+  pvMode = mode === '360' ? '360' : 'photo';
+  const stage = $('[data-pv-stage]', pvEl);
+  const canvasWrap = $('[data-pv-canvas-wrap]', pvEl);
+  const photo = $('[data-pv-image]', pvEl);
+  const hint = $('[data-pv-hint]', pvEl);
+  const is360 = pvMode === '360';
+  $$('[data-pv-mode]', pvEl).forEach((btn) => {
+    const on = btn.dataset.pvMode === pvMode;
+    btn.classList.toggle('is-active', on);
+    btn.setAttribute('aria-pressed', String(on));
+  });
+  stage?.classList.toggle('is-360', is360);
+  stage?.classList.toggle('is-loading', is360 && !pvSceneApi);
+  if (canvasWrap) canvasWrap.hidden = !is360;
+  if (photo) photo.classList.toggle('is-hidden', is360);
+  if (hint) hint.hidden = !is360;
+  if (is360) initProductScene();
+}
+
+async function initProductScene() {
+  if (!pvProduct || !$('#pv-scene')) return;
+  if (!pvLoadPromise) {
+    pvLoadPromise = import('./scene.js').then(async (mod) => {
+      await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+      const api = await mod.initScene($('#pv-scene'));
+      if (!api) throw new Error('WebGL unavailable');
+      return api;
+    });
+  }
+  try {
+    if (!pvSceneApi) {
+      pvSceneApi = await pvLoadPromise;
+      sceneApi = pvSceneApi;
+      window.__sugarScene = pvSceneApi;
+      pvSceneApi.start();
+      pvSceneApi.setProduct(pvProduct.id, true);
+    } else {
+      pvSceneApi.setProduct(pvProduct.id, true);
+    }
+    $('[data-pv-canvas-wrap]', pvEl)?.classList.remove('no-webgl');
+    $('[data-pv-stage]', pvEl)?.classList.remove('is-loading');
+  } catch (err) {
+    console.warn('360° view unavailable', err);
+    pvLoadPromise = null;
+    pvSceneApi = null;
+    $('[data-pv-canvas-wrap]', pvEl)?.classList.add('no-webgl');
+    $('[data-pv-stage]', pvEl)?.classList.remove('is-loading');
+    setPvMode('photo');
+    showToast('360° view is unavailable on this device — showing the photo instead.');
+  }
+}
+
+function populateProductView(p) {
+  if (!pvEl || !p) return;
+  const set = (sel, value) => { const el = $(sel, pvEl); if (el) el.textContent = value; };
+  set('[data-pv-kicker]', `${p.index} — ${p.kicker}`);
+  set('[data-pv-title]', p.name);
+  set('[data-pv-desc]', p.desc);
+  set('[data-pv-usage]', p.usage);
+  set('[data-pv-ingredients]', p.ingredients);
+  set('[data-pv-size]', p.size);
+  set('[data-pv-badge]', p.badge);
+  set('[data-pv-index]', p.index);
+  set('[data-pv-crumb]', `${p.index} — ${p.short}`);
+  const price = $('[data-pv-price]', pvEl);
+  if (price) price.innerHTML = `${money(p.price)} <span>· ${p.size} · incl. taxes</span>`;
+  const tags = $('[data-pv-tags]', pvEl);
+  if (tags) tags.innerHTML = p.tags.map((t) => `<span>${t}</span>`).join('');
+  const img = $('[data-pv-image]', pvEl);
+  if (img) { img.src = p.image; img.alt = p.alt; }
+  setPvMode('photo');
+  if (pvSceneApi) pvSceneApi.setProduct(p.id, true);
+}
+
+function showProductView(id) {
+  const p = findProduct(id);
+  if (!p || !pvEl) return;
+  pvProduct = p;
+  populateProductView(p);
+  document.body.classList.add('is-product-view');
+  pvEl.classList.add('is-open');
+  pvEl.setAttribute('aria-hidden', 'false');
+  document.title = `${p.name} — Sugar-0%`;
+  if (mobileMenu?.classList.contains('is-open')) closeMenu();
+  if (cartEl.classList.contains('is-open')) closeCart();
+  requestAnimationFrame(() => lenis.resize());
+  lenis.scrollTo(0, { immediate: true });
+  window.scrollTo(0, 0);
+  setTimeout(() => $('[data-pv-title]', pvEl)?.focus({ preventScroll: true }), 60);
+}
+
+function hideProductView() {
+  if (!pvEl) return;
+  document.body.classList.remove('is-product-view');
+  pvEl.classList.remove('is-open');
+  pvEl.setAttribute('aria-hidden', 'true');
+  document.title = baseTitle;
+  requestAnimationFrame(() => {
+    lenis.resize();
+    ScrollTrigger.refresh();
+  });
+}
+
+function handleRoute() {
+  const match = location.hash.match(/^#\/product\/([a-z0-9-]+)/i);
+  if (match && findProduct(match[1])) {
+    showProductView(match[1]);
+    return;
+  }
+  const wasOpen = pvEl?.classList.contains('is-open');
+  hideProductView();
+  if (wasOpen) {
+    lenis.scrollTo(0, { immediate: true });
+    window.scrollTo(0, 0);
+  }
+}
+window.addEventListener('hashchange', handleRoute);
+
+if (pvEl) {
+  $$('[data-pv-mode]', pvEl).forEach((btn) => {
+    btn.addEventListener('click', () => setPvMode(btn.dataset.pvMode));
+  });
+  $('[data-pv-add]', pvEl)?.addEventListener('click', () => {
+    if (!pvProduct) return;
+    addToCart(pvProduct.id);
+    openCart();
+  });
+}
+
+/* ============================================================
+   Floating enquiry
+   ============================================================ */
+const enquiryEl = $('[data-enquiry-modal]');
+let enquiryFocus = null;
+function openEnquiry() {
+  if (!enquiryEl) return;
+  enquiryFocus = document.activeElement;
+  enquiryEl.classList.add('is-open');
+  enquiryEl.setAttribute('aria-hidden', 'false');
   lockScroll();
-  setTimeout(() => $('[data-product-modal-close]')?.focus(), 120);
+  setTimeout(() => $('#enq-name')?.focus(), 140);
 }
-function closeProduct() {
-  modal.classList.remove('is-open');
-  modal.setAttribute('aria-hidden', 'true');
-  unlockScroll();
-  if (modalFocus) modalFocus.focus();
+function closeEnquiry() {
+  if (!enquiryEl) return;
+  enquiryEl.classList.remove('is-open');
+  enquiryEl.setAttribute('aria-hidden', 'true');
+  if (!cartEl.classList.contains('is-open') && !mobileMenu?.classList.contains('is-open') && !pvEl?.classList.contains('is-open')) unlockScroll();
+  enquiryFocus?.focus?.();
 }
-$$('[data-view]').forEach((btn) => btn.addEventListener('click', () => openProduct(btn.dataset.view)));
-$$('[data-product-modal-close]').forEach((btn) => btn.addEventListener('click', closeProduct));
-$('[data-modal-add]')?.addEventListener('click', () => {
-  if (!modalProduct) return;
-  addToCart(modalProduct.id);
-  closeProduct();
-  openCart();
+$$('[data-enquiry-open]').forEach((btn) => btn.addEventListener('click', openEnquiry));
+$$('[data-enquiry-close]').forEach((btn) => btn.addEventListener('click', closeEnquiry));
+$('[data-enquiry-form]')?.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const name = $('#enq-name');
+  const contact = $('#enq-contact');
+  const topic = $('#enq-topic');
+  const message = $('#enq-message');
+  let valid = true;
+  const mark = (field, ok) => {
+    field.closest('.field')?.classList.toggle('is-error', !ok);
+    if (!ok) valid = false;
+  };
+  mark(name, name.value.trim().length > 1);
+  mark(contact, contact.value.trim().length > 4);
+  if (!valid) {
+    showToast('Please add your name and a way to reach you.');
+    return;
+  }
+  const body = [
+    'Hello Sugar-0% team,',
+    '',
+    `Name: ${name.value.trim()}`,
+    `Contact: ${contact.value.trim()}`,
+    `Interested in: ${topic.value}`,
+    '',
+    message.value.trim() || '(No message)',
+    '',
+    'Sent from the Sugar-0% website.'
+  ].join('\r\n');
+  window.location.href = `mailto:naturalsweetsolutions@gmail.com?subject=${encodeURIComponent('Sugar-0% enquiry — ' + topic.value)}&body=${encodeURIComponent(body)}`;
+  showToast('Opening your email app with your enquiry…');
+  setTimeout(closeEnquiry, 700);
 });
 
 /* ============================================================
@@ -417,65 +616,6 @@ document.addEventListener('click', (e) => {
   const add = e.target.closest('[data-add]');
   if (!add) return;
   addToCart(add.dataset.add);
-});
-
-/* ============================================================
-   Hero product switch
-   ============================================================ */
-let currentProduct = 'jar';
-const switchButtons = $$('.product-switch__btn');
-const studioKicker = $('[data-studio-kicker]');
-const studioName = $('[data-studio-name]');
-const studioPrice = $('[data-studio-price]');
-const studioDesc = $('[data-studio-desc]');
-const studioBest = $('[data-studio-best]');
-const studioIngredients = $('[data-studio-ingredients]');
-const studioAdd = $('[data-studio-add]');
-const studioView = $('[data-studio-view]');
-
-function applyStudioProduct(p) {
-  if (!p) return;
-  if (studioKicker) studioKicker.textContent = `${p.index} — ${p.kicker}`;
-  if (studioName) studioName.textContent = p.name;
-  if (studioPrice) studioPrice.innerHTML = `${money(p.price)} <span>· ${p.size}</span>`;
-  if (studioDesc) studioDesc.textContent = p.desc;
-  if (studioBest) studioBest.textContent = p.tags.join(' · ');
-  if (studioIngredients) studioIngredients.textContent = p.ingredients;
-  if (studioAdd) studioAdd.dataset.add = p.id;
-  if (studioView) studioView.dataset.view = p.id;
-  $$('[data-product-index]').forEach((el) => { el.textContent = p.index; });
-  $$('[data-product-name]').forEach((el) => { el.textContent = p.short; });
-  $$('[data-product-size]').forEach((el) => { el.textContent = p.size; });
-}
-
-function animateStudioProduct(p) {
-  if (reduced) {
-    applyStudioProduct(p);
-    return;
-  }
-  const els = $$('.studio__kicker, .studio__name, .studio__price, .studio__desc, .studio__meta');
-  gsap.timeline()
-    .to(els, { y: -10, opacity: 0, duration: 0.22, stagger: 0.02 })
-    .call(() => applyStudioProduct(p))
-    .fromTo(els, { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, stagger: 0.025, ease: 'power2.out' });
-}
-
-applyStudioProduct(products[0]);
-
-switchButtons.forEach((btn) => {
-  btn.addEventListener('click', () => {
-    const id = btn.dataset.product;
-    if (id === currentProduct) return;
-    currentProduct = id;
-    const p = products.find((x) => x.id === id);
-    switchButtons.forEach((b) => {
-      const on = b === btn;
-      b.classList.toggle('is-active', on);
-      b.setAttribute('aria-selected', String(on));
-    });
-    sceneApi?.setProduct(id);
-    animateStudioProduct(p);
-  });
 });
 
 /* ============================================================
@@ -697,7 +837,7 @@ menuClose?.addEventListener('click', closeMenu);
 $$('[data-menu-link]').forEach((link) => {
   link.addEventListener('click', () => {
     closeMenu();
-    setTimeout(() => scrollToTarget(link.getAttribute('href')), 90);
+    setTimeout(() => goToSection(link.getAttribute('href')), 90);
   });
 });
 
@@ -705,28 +845,44 @@ $$('[data-menu-link]').forEach((link) => {
    Smooth anchors
    ============================================================ */
 function scrollToTarget(hash) {
-  if (!hash || hash === '#') return;
+  if (!hash || hash === '#' || hash.startsWith('#/')) return;
   const target = hash === '#top' ? document.body : document.querySelector(hash);
   if (!target) return;
-  lenis.scrollTo(target, { offset: hash === '#top' ? 0 : -70, duration: 1.35 });
+  lenis.resize();
+  lenis.scrollTo(target, { offset: 0, duration: 1.2 });
+}
+function goToSection(hash) {
+  if (!hash || hash === '#' || hash.startsWith('#/')) return;
+  if (document.body.classList.contains('is-product-view')) {
+    hideProductView();
+    history.replaceState(null, '', hash);
+    setTimeout(() => scrollToTarget(hash), 80);
+    return;
+  }
+  scrollToTarget(hash);
 }
 $$('a[href^="#"]').forEach((a) => {
   a.addEventListener('click', (e) => {
     const hash = a.getAttribute('href');
-    if (!hash || hash === '#') return;
+    if (!hash || hash === '#' || hash.startsWith('#/')) return;
     const target = document.querySelector(hash);
     if (!target) return;
     e.preventDefault();
     if (mobileMenu.classList.contains('is-open')) closeMenu();
     if (cartEl.classList.contains('is-open')) closeCart();
-    scrollToTarget(hash);
+    goToSection(hash);
   });
 });
 
 /* Escape closes overlays */
 document.addEventListener('keydown', (e) => {
   if (e.key !== 'Escape') return;
-  if (modal.classList.contains('is-open')) closeProduct();
+  if (enquiryEl?.classList.contains('is-open')) closeEnquiry();
+  else if (document.body.classList.contains('is-product-view')) {
+    hideProductView();
+    history.replaceState(null, '', '#collection');
+    setTimeout(() => scrollToTarget('#collection'), 80);
+  }
   else if (cartEl.classList.contains('is-open')) closeCart();
   else if (mobileMenu.classList.contains('is-open')) closeMenu();
 });
@@ -821,7 +977,7 @@ function setupCursor() {
       gsap.to(dot, { scale: 1, duration: 0.25 });
     });
   });
-  const stage = $('[data-stage]');
+  const stage = $('[data-pv-stage]') || $('[data-stage]');
   if (stage) {
     stage.addEventListener('pointerenter', () => {
       ring.classList.add('is-drag');
@@ -850,13 +1006,11 @@ function setupMagnetic() {
 }
 
 /* ============================================================
-   Loader + scene boot
+   Loader
    ============================================================ */
 const preloader = $('[data-preloader]');
 const loaderBar = $('[data-loader-bar]');
 const loaderPercent = $('[data-loader-percent]');
-let sceneReady = false;
-let sceneStarted = false;
 let loaderDone = false;
 const loadStart = performance.now();
 const loadObj = { v: 0 };
@@ -867,18 +1021,10 @@ function setLoader(v) {
   loaderPercent.textContent = pct + '%';
 }
 
-function startScene() {
-  if (!sceneApi || sceneStarted) return;
-  sceneStarted = true;
-  sceneApi.start();
-  sceneApi.setProduct(currentProduct, true);
-}
-
 function finishLoader() {
   if (loaderDone) return;
   loaderDone = true;
   setLoader(100);
-  startScene();
   setTimeout(() => {
     preloader.classList.add('is-done');
     preloader.setAttribute('aria-hidden', 'true');
@@ -888,13 +1034,6 @@ function finishLoader() {
     ScrollTrigger.refresh();
     setTimeout(() => { preloader.style.display = 'none'; }, 1200);
   }, 350);
-}
-
-function maybeFinishLoader() {
-  if (loaderDone) return;
-  const elapsed = performance.now() - loadStart;
-  if (sceneReady && elapsed > 1700) finishLoader();
-  else setTimeout(maybeFinishLoader, 120);
 }
 
 async function boot() {
@@ -909,34 +1048,20 @@ async function boot() {
   setupMagnetic();
   startClock();
   renderCart();
+  handleRoute();
 
   gsap.to(loadObj, {
-    v: 94,
-    duration: 1.5,
+    v: 100,
+    duration: 1.35,
     ease: 'power2.out',
     onUpdate: () => setLoader(loadObj.v)
   });
 
-  try {
-    sceneApi = await initScene($('#scene'));
-  window.__sugarScene = sceneApi;
-  } catch (err) {
-    console.warn('3D scene unavailable', err);
-    sceneApi = null;
-  }
-  if (!sceneApi) {
-    const wrap = $('[data-canvas-wrap]');
-    if (wrap) {
-      wrap.innerHTML = '<img class="stage__fallback" src="/assets/jar.webp" alt="Sugar-0% stevia powder jar with copper lid" />';
-      $('[data-stage]')?.classList.add('no-webgl');
-    }
-  }
-  sceneReady = true;
-  if (loaderDone) startScene();
-  else maybeFinishLoader();
+  const remaining = Math.max(0, 1600 - (performance.now() - loadStart));
+  setTimeout(finishLoader, remaining);
 
   // safety net: never leave the loader stuck
-  setTimeout(() => { if (!loaderDone) finishLoader(); }, 5200);
+  setTimeout(() => { if (!loaderDone) finishLoader(); }, 4500);
 }
 
 boot();
